@@ -13,7 +13,7 @@ node {
             sh "git config user.email eddie.d.lopez1@gmail.com"
             sh "git config user.name eddiedlopez"
             sh "cat vote-ui-deployment.yaml"
-            sh "sed -i 's+eddiedlopez/vote.*+eddiedlopez/vote:${DOCKERTAG}+g' vote-ui-deployment.yaml"
+            sh "sed -i 's+eddiedlopez/vote-noarch.*+eddiedlopez/vote-noarch:${DOCKERTAG}+g' vote-ui-deployment.yaml"
             sh "cat vote-ui-deployment.yaml"
             sh "git add ."
             sh "git commit -m 'Done by Jenkins Job deployment: ${env.BUILD_NUMBER}'"
