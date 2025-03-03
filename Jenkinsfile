@@ -9,7 +9,7 @@ node {
     stage('Update GIT') {
       script {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-          withCredentials([usernamePassword(credentialsId: 'eddiedlopez github', passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USERNAME')]) {
+          withCredentials([usernamePassword(credentialsId: 'eddiedlopez-github', passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USERNAME')]) {
             sh "git config user.email eddie.d.lopez1@gmail.com"
             sh "git config user.name eddiedlopez"
             sh "cat vote-ui-deployment.yaml"
