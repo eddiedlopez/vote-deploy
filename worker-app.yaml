@@ -18,10 +18,10 @@ spec:
     metadata:
       name: worker
       labels:
-        app: dotnet
+        app: java
         role: worker
         version: latest
     spec:
       containers:
-        - image: dockersamples/examplevotingapp_worker@sha256:374f13009def417269e568e3796746605a4efc4e166e7ccda69312face04b963
+        - image: eddiedlopez/worker-noarch
           name: worker

@@ -1,0 +1,80 @@
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: db-pv
+spec:
+  capacity:
+    storage: 1Gi
+  accessModes:
+  - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: manual
+  hostPath:
+    path: /root/volumes/pv-data/
+    type: Directory
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: db-pvc
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+  storageClassName: manual
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: db
+  namespace: vote-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: db
+  minReadySeconds: 20
+  template:
+    metadata:
+      labels:
+        app: db
+        role: db
+        version: latest
+    spec:
+      containers:
+      - image: postgres@sha256:dd15a3f9b9a11aa9f1c5a018a33e1ce62fc76ad0d2fca99953ab03b5969174c1
+        imagePullPolicy: Always
+        name: db
+        env:
+          - name: POSTGRES_HOST_AUTH_METHOD
+            value: trust
+        ports:
+        - containerPort: 5432
+          protocol: TCP
+          name: postgres  
+        volumeMounts:
+        - name: db-pv
+          mountPath: /var/lib/postgresql/data
+          subPath: postgres
+      volumes:
+      - name: db-pv
+        persistentVolumeClaim:
+          claimName: db-pvc
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    role: vote-db
+  name: vote-db
+  namespace: vote-app
+spec:
+  selector:
+    role: vote-db
+  ports:
+  - port: 5432
+    protocol: TCP
+    targetPort: 5432

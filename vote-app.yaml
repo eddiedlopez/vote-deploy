@@ -1,3 +1,4 @@
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -32,3 +33,19 @@ spec:
         ports:
         - containerPort: 80
           name: ui
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ui
+  labels:
+    role: ui
+spec:
+  type: NodePort
+  ports:
+  - port: 80
+    targetPort: 80
+    protocol: TCP
+    name: http
+  selector:
+    role: ui

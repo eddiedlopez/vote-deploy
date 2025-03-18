@@ -1,3 +1,4 @@
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata: 
@@ -16,10 +17,24 @@ spec:
         app: result
     spec:
       containers:
-        - image: dockersamples/examplevotingapp_result@sha256:c87f44054a409c8a457b19089efbb9bb039b4539af62b2f4906bf6f05d380c31
+        - image: eddiedlopez/result-noarch:latest
           name: result
           ports:
           - containerPort: 80
             name: result
-               
-
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: result 
+  labels: 
+    app: result
+spec:
+  type: NodePort
+  ports:
+  - name: "results-service"
+    port: 80
+    targetPort: 80
+    nodePort: 31001
+  selector:
+    app: result
