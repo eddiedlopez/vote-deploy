@@ -1,20 +1,34 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: vote-ui
+  name: ui
+  labels: 
+    role: ui
 spec:
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1  
   replicas: 1
   revisionHistoryLimit: 3
+  minReadySeconds: 20  
   selector:
     matchLabels:
-      app: vote-ui
+      role: ui
+    matchExpressions:
+      - key: version
+        operator: Exists    
   template:
     metadata:
+      name: ui
       labels:
-        app: vote-ui
+        role: ui
+        version: latest 
     spec:
       containers:
       - image: docker.io/eddiedlopez/vote-noarch:latest
-        name: vote-ui
+        name: ui
         ports:
         - containerPort: 80
+          name: ui

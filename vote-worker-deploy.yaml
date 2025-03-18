@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: worker
+  namespace: vote-app
+spec:
+  replicas: 1
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+  minReadySeconds: 20
+  selector:
+    matchLabels:
+      role: worker
+  template:
+    metadata:
+      name: worker
+      labels:
+        app: dotnet
+        role: worker
+        version: latest
+    spec:
+      containers:
+        - image: dockersamples/examplevotingapp_worker@sha256:374f13009def417269e568e3796746605a4efc4e166e7ccda69312face04b963
+          name: worker

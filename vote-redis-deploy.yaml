@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: redis
+  namespace: vote-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      role: redis
+  minReadySeconds: 20
+  template:
+    metadata:
+      labels:
+        app: redis
+        role: redis
+        version: latest
+    spec:
+      containers:
+      - image: redis@sha256:a5584862f18c25c38e32ddadcd1d34163dced89fc7bd159ea014f89992c6b0f1
+        imagePullPolicy: Always
+        name: redis
+        ports:
+        - containerPort: 6379
+          protocol: TCP
+      restartPolicy: Always
