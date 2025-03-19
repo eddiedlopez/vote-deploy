@@ -16,7 +16,7 @@ spec:
   minReadySeconds: 20  
   selector:
     matchLabels:
-      role: ui
+      role: role
     matchExpressions:
       - key: version
         operator: Exists    
