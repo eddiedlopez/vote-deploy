@@ -25,7 +25,6 @@ spec:
       name: vote
       labels:
         role: vote
-        version: latest 
     spec:
       containers:
       - image: docker.io/eddiedlopez/vote:@sha256:35fbcbfbe4d65b3e9a89b5325a69d04b1e0938ba4289823524c7224d1b9c6812
