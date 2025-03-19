@@ -17,7 +17,7 @@ spec:
         app: result
     spec:
       containers:
-        - image: eddiedlopez/result-noarch:latest
+        - image: eddiedlopez/result:latest
           name: result
           ports:
           - containerPort: 80

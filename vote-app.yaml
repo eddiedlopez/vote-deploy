@@ -28,7 +28,7 @@ spec:
         version: latest 
     spec:
       containers:
-      - image: docker.io/eddiedlopez/vote-noarch:latest
+      - image: docker.io/eddiedlopez/vote:latest
         name: ui
         ports:
         - containerPort: 80
