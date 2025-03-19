@@ -2,9 +2,9 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: ui
+  name: vote
   labels: 
-    role: ui
+    role: vote
 spec:
   strategy:
     type: RollingUpdate
@@ -22,24 +22,24 @@ spec:
         operator: Exists    
   template:
     metadata:
-      name: ui
+      name: vote
       labels:
-        role: ui
+        role: vote
         version: latest 
     spec:
       containers:
-      - image: docker.io/eddiedlopez/vote:latest
-        name: ui
+      - image: docker.io/eddiedlopez/vote:@sha256:35fbcbfbe4d65b3e9a89b5325a69d04b1e0938ba4289823524c7224d1b9c6812
+        name: vote
         ports:
         - containerPort: 80
-          name: ui
+          name: vote
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: ui
+  name: vote
   labels:
-    role: ui
+    role: vote
 spec:
   type: NodePort
   ports:
@@ -48,4 +48,4 @@ spec:
     protocol: TCP
     name: http
   selector:
-    role: ui
+    role: vote
