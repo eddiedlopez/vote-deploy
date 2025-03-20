@@ -23,5 +23,5 @@ spec:
         version: latest
     spec:
       containers:
-        - image: eddiedlopez/worker-noarch
+        - image: eddiedlopez/worker:latest
           name: worker
